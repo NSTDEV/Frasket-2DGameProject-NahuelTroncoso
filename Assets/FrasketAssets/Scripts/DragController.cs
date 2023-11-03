@@ -16,7 +16,7 @@ public class DragController : MonoBehaviour
         get
         {
             Vector3 pos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            pos.z = -5f;
+            pos.z = 0f;
             return pos;
         }
     }
@@ -90,12 +90,17 @@ public class DragController : MonoBehaviour
         isDraggin = false;
         line.enabled = false;
 
-        dragEndPos = MousePosition;
-        Vector3 distance = dragEndPos - dragStartPos;
-
-        if (distance.magnitude > 1f)
+        Vector3 distance = Vector3.zero;
+        for (int i = 1; i < line.positionCount; i++)
         {
-            throwForce = distance.magnitude;
+            distance += line.GetPosition(i) - line.GetPosition(i - 1);
         }
+
+        if (distance.magnitude > dragLimit)
+        {
+            distance = distance.normalized * dragLimit;
+        }
+
+        throwForce = distance.magnitude;
     }
 }

@@ -8,6 +8,7 @@ TagManager:
   - Fruit
   - Ground
   - BG
+  - EasterEgg
   layers:
   - Default
   - TransparentFX
@@ -19,7 +20,7 @@ TagManager:
   - Fruits
   - Grabbable
   - Ground
-  - 
+  - Ceiling
   - 
   - 
   - 

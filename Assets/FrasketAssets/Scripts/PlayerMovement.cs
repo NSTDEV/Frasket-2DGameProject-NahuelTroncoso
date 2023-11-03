@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Fruits"));
     }
 
-    void playerMovement()
+    private void playerMovement()
     {
         if (Input.GetKey("d") || Input.GetKey("right"))
         {
@@ -41,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    void playerJump()
+    private void playerJump()
     {
         if (CheckGround.isGrounded == false)
         {
@@ -62,18 +62,16 @@ public class PlayerMovement : MonoBehaviour
 
         if (rb2D.velocity.y < 0)
         {
-            rb2D.velocity +=
-                Vector2.up * Physics2D.gravity.y * (fallMultiplier) * Time.deltaTime;
+            rb2D.velocity += Vector2.up * Physics2D.gravity.y * (fallMultiplier) * Time.deltaTime;
         }
 
         if (rb2D.velocity.y > 0 && !Input.GetKey("space"))
         {
-            rb2D.velocity +=
-                Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier) * Time.deltaTime;
+            rb2D.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier) * Time.deltaTime;
         }
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
         playerMovement();
         playerJump();

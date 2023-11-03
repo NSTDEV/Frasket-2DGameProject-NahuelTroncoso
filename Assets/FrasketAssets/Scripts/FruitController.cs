@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class FruitController : MonoBehaviour
 {
-    private SpriteRenderer spriteRenderer = null;
+    private SpriteRenderer spriteRenderer;
     private bool isGrabbed = false;
     private bool hasTouchedGround = false;
 
-    private void Awake()
+    void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
@@ -24,12 +24,12 @@ public class FruitController : MonoBehaviour
                 spriteRenderer.enabled = true;
                 hasTouchedGround = false;
             }
+            Debug.Log("OnTriggerEnter2D called");
 
             isGrabbed = true;
         }
         else if (collision.CompareTag("Ground"))
         {
-            Debug.Log("OnTriggerEnter2D called");
             if (isGrabbed)
             {
                 hasTouchedGround = false;
@@ -56,9 +56,15 @@ public class FruitController : MonoBehaviour
 
         if (!isGrabbed && hasTouchedGround)
         {
+            Debug.Log("Fruit not grabbed and has touched ground. Destroying fruit.");
             GetComponent<SpriteRenderer>().enabled = false;
             gameObject.transform.GetChild(0).gameObject.SetActive(true);
             Destroy(gameObject, 0.4f);
         }
+    }
+    
+    public void SetIsHeld(bool isHeld)
+    {
+        isGrabbed = isHeld;
     }
 }

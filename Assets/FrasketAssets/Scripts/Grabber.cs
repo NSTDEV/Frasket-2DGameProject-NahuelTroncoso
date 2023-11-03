@@ -3,55 +3,80 @@ using UnityEngine;
 public class Grabber : MonoBehaviour
 {
     private GameObject heldFruit;
-    private DragController dragController;
-    private float throwForce;
+    private Vector3 initialHeldPosition;
+    private bool isHolding = false;
+    private Vector3 dragStartPos;
 
-    private void Start()
-    {
-        dragController = GetComponent<DragController>();
-    }
+    public DragController dragController;
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1))
+        if (!isHolding)
         {
-            if (heldFruit == null)
+            Collider2D hitCollider = GetTouchingFruit();
+            if (hitCollider != null)
             {
-                TryGrabFruit();
+                TryGrabFruit(hitCollider.gameObject);
             }
-            else
+        }
+        else
+        {
+            MoveHeldFruit();
+            if (Input.GetMouseButtonUp(0))
             {
                 ThrowFruit();
             }
         }
     }
 
-    private void TryGrabFruit()
+    private Collider2D GetTouchingFruit()
     {
-        Vector3 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(mousePosition, 0.1f);
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, 0.1f);
 
-        foreach (var hitCollider in hitColliders)
+        foreach (Collider2D collider in hitColliders)
         {
-            if (hitCollider.CompareTag("Fruit"))
+            if (collider.CompareTag("Fruit"))
             {
-                heldFruit = hitCollider.gameObject;
-                heldFruit.transform.SetParent(transform);
-                heldFruit.transform.localPosition = new Vector3(0f, 0.17f, -5f);
-                heldFruit.GetComponent<Rigidbody2D>().simulated = false;
+                return collider;
             }
+        }
+
+        return null;
+    }
+
+    private void TryGrabFruit(GameObject fruit)
+    {
+        heldFruit = fruit;
+        Rigidbody2D fruitRigidbody = heldFruit.GetComponent<Rigidbody2D>();
+        fruitRigidbody.simulated = false;
+
+        initialHeldPosition = new Vector3(0f, 0.18f, 0f);
+        isHolding = true;
+        dragStartPos = transform.position;
+    }
+
+    private void MoveHeldFruit()
+    {
+        if (heldFruit != null)
+        {
+            heldFruit.transform.position = transform.position + initialHeldPosition;
         }
     }
 
     private void ThrowFruit()
     {
-        heldFruit.transform.SetParent(null);
-        Rigidbody2D fruitRigidbody = heldFruit.GetComponent<Rigidbody2D>();
-        fruitRigidbody.simulated = true;
+        if (heldFruit != null)
+        {
+            Rigidbody2D fruitRigidbody = heldFruit.GetComponent<Rigidbody2D>();
+            fruitRigidbody.simulated = true;
 
-        Vector3 throwDirection = -(dragController.dragEndPos - dragController.dragStartPos).normalized;
-        fruitRigidbody.velocity = throwDirection * dragController.throwForce;
+            Vector3 throwDirection = -(dragController.dragEndPos - dragController.dragStartPos).normalized;
+            float throwForce = (dragController.dragEndPos - dragController.dragStartPos).magnitude * 3.0f;
 
-        heldFruit = null;
+            fruitRigidbody.velocity = throwDirection * throwForce;
+
+            heldFruit = null;
+            isHolding = false;
+        }
     }
 }

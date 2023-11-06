@@ -4,12 +4,16 @@ using UnityEngine;
 
 public class DragController : MonoBehaviour
 {
+
+    public delegate void DragEndEvent(Vector3 dragEndPos);
+    public static event DragEndEvent OnDragEnd;
     public LineRenderer line;
     public float dragLimit = 1f;
     private bool isDraggin;
     public Vector3 dragStartPos;
     public Vector3 dragEndPos;
     public float throwForce;
+    private Vector3 dragDirection;
 
     Vector3 MousePosition
     {
@@ -54,26 +58,17 @@ public class DragController : MonoBehaviour
 
     void Drag()
     {
-        Vector3 startPos = line.GetPosition(0);
         Vector3 currentPos = MousePosition;
-
-        Vector3 distance = currentPos - startPos;
-
-        if (distance.magnitude <= dragLimit)
-        {
-            line.SetPosition(1, currentPos);
-        }
-        else
-        {
-            Vector3 limitVector = startPos + (distance.normalized * dragLimit);
-            line.SetPosition(1, limitVector);
-        }
+        dragDirection += currentPos - line.GetPosition(1);
+        line.SetPosition(1, currentPos);
     }
+
 
     void DragStart()
     {
         line.enabled = true;
         isDraggin = true;
+        dragDirection = Vector3.zero;
         line.SetPosition(0, MousePosition);
     }
 
@@ -98,9 +93,13 @@ public class DragController : MonoBehaviour
 
         if (distance.magnitude > dragLimit)
         {
-            distance = distance.normalized * dragLimit;
+            distance = (distance.normalized * dragLimit) * 3;
         }
 
         throwForce = distance.magnitude;
+        dragEndPos = MousePosition;
+
+        // Lanzar el evento con la posición de dragEndPos
+        OnDragEnd?.Invoke(dragEndPos);
     }
 }

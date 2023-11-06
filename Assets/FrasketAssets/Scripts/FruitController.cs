@@ -13,38 +13,50 @@ public class FruitController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void Start()
     {
-        if (collision.CompareTag("Player"))
-        {
-            gameObject.transform.GetChild(0).gameObject.SetActive(true);
+        Invoke("StartBlink", 4f);
+    }
 
-            if (spriteRenderer != null)
-            {
-                spriteRenderer.enabled = true;
-                hasTouchedGround = false;
-            }
-            Debug.Log("OnTriggerEnter2D called");
+    private void StartBlink()
+    {
+        StartCoroutine(BlinkFruit());
+    }
 
-            isGrabbed = true;
-        }
-        else if (collision.CompareTag("Ground"))
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Ground"))
         {
+            hasTouchedGround = true;
             if (isGrabbed)
             {
                 hasTouchedGround = false;
+                spriteRenderer.enabled = true;
+                gameObject.transform.GetChild(0).gameObject.SetActive(false);
+                CancelInvoke("StartBlink");
             }
-            else
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (collision.gameObject.CompareTag("Player"))
+        {
+            if (isGrabbed && hasTouchedGround)
             {
-                hasTouchedGround = true;
                 StartCoroutine(BlinkFruit());
             }
         }
     }
 
+    private void DestroyFruit()
+    {
+        Destroy(gameObject);
+    }
+
     private IEnumerator BlinkFruit()
     {
-        float timeToBlink = 1.2f;
+        float timeToBlink = 1f;
         float blinkInterval = 0.2f;
         float timer = Time.time + timeToBlink;
 
@@ -54,17 +66,10 @@ public class FruitController : MonoBehaviour
             yield return new WaitForSeconds(blinkInterval);
         }
 
-        if (!isGrabbed && hasTouchedGround)
-        {
-            Debug.Log("Fruit not grabbed and has touched ground. Destroying fruit.");
-            GetComponent<SpriteRenderer>().enabled = false;
-            gameObject.transform.GetChild(0).gameObject.SetActive(true);
-            Destroy(gameObject, 0.4f);
-        }
-    }
-    
-    public void SetIsHeld(bool isHeld)
-    {
-        isGrabbed = isHeld;
+        spriteRenderer.enabled = false;
+        gameObject.transform.GetChild(0).gameObject.SetActive(true);
+
+        yield return new WaitForSeconds(0.5f);
+        DestroyFruit();
     }
 }

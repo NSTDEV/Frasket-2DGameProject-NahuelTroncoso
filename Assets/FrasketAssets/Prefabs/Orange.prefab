@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 7091334814054004686}
   - component: {fileID: 6061486393159389329}
   - component: {fileID: -6592251500386918069}
+  - component: {fileID: 6030069127165757335}
   m_Layer: 0
   m_Name: Orange
   m_TagString: Fruit
@@ -151,7 +152,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -171,6 +172,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.08
+--- !u!114 &6030069127165757335
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3822207463468549113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0ef5fc4ce3d29b4b88801c616677996, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToLive: 2
 --- !u!1 &6794694115131434240
 GameObject:
   m_ObjectHideFlags: 0

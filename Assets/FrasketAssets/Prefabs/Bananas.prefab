@@ -119,6 +119,7 @@ GameObject:
   - component: {fileID: 176528411924515969}
   - component: {fileID: 7545053237994548338}
   - component: {fileID: -7140385984050662763}
+  - component: {fileID: -9034659955320470771}
   m_Layer: 0
   m_Name: Bananas
   m_TagString: Fruit
@@ -257,7 +258,7 @@ CircleCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 1024
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -277,3 +278,16 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.08
+--- !u!114 &-9034659955320470771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9069896299393622601}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b0ef5fc4ce3d29b4b88801c616677996, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeToLive: 2

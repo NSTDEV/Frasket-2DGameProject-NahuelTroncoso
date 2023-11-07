@@ -1,0 +1,18 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1e28288e8dd075408a753e576c51bf3, type: 3}
+  m_Name: Apple
+  m_EditorClassIdentifier: 
+  fruitName: Apple
+  fruitSprite: {fileID: 7293598183456022363, guid: 1ddc9afd21fec77489b1248d18f31b68, type: 3}
+  fruitPrefab: {fileID: 9208997555896349408, guid: e0b8eca3a7cf07a4b840b8175fd14dc8, type: 3}
+  fruitScore: 20

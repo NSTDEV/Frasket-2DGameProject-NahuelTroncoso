@@ -8,6 +8,7 @@ public class PauseMenuButton : MonoBehaviour
 {
     [SerializeField] private GameObject pauseButton;
     [SerializeField] private GameObject pauseMenu;
+    [SerializeField] private GameObject easterEgg;
     [SerializeField] private RawImage backgroundRawImage;
     private bool backgroundVisible = false;
     private bool pausedGame = false;
@@ -29,6 +30,7 @@ public class PauseMenuButton : MonoBehaviour
     {
         pauseButton.SetActive(option1);
         pauseMenu.SetActive(option2);
+        easterEgg.SetActive(option2);
     }
 
     public void StartMenu()

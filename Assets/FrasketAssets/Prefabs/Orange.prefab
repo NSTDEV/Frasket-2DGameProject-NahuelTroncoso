@@ -184,7 +184,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0ef5fc4ce3d29b4b88801c616677996, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeToLive: 2
+  scoreSystem: {fileID: 0}
+  fruitData: {fileID: 11400000, guid: 8956d21d87b67f64b8da0ed5c95ad683, type: 2}
 --- !u!1 &6794694115131434240
 GameObject:
   m_ObjectHideFlags: 0

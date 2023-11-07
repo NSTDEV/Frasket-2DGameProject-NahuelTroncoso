@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class PrefabSpawner : MonoBehaviour
 {
-    [SerializeField] GameObject[] prefabsArr;
+    [SerializeField] FruitData[] fruitDataArray;
     [SerializeField] float spawnInterval = 0.5f;
     [SerializeField] float minTras;
     [SerializeField] float maxTras;
-
 
     void Start()
     {
@@ -22,7 +21,11 @@ public class PrefabSpawner : MonoBehaviour
             var wanted = Random.Range(minTras, maxTras);
             var position = new Vector3(wanted, transform.position.y);
 
-            GameObject prefabSpawner = Instantiate(prefabsArr[Random.Range(0, prefabsArr.Length)], position, Quaternion.identity);
+            FruitData selectedFruitData = fruitDataArray[Random.Range(0, fruitDataArray.Length)];
+
+            GameObject fruitPrefab = selectedFruitData.fruitPrefab;
+
+            GameObject spawnedFruit = Instantiate(fruitPrefab, position, Quaternion.identity);
 
             yield return new WaitForSeconds(spawnInterval);
         }

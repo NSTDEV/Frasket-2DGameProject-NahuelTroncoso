@@ -49,7 +49,7 @@ public class Grabber : MonoBehaviour
             heldFruit = fruit;
             Rigidbody2D fruitRigidbody = heldFruit.GetComponent<Rigidbody2D>();
             fruitRigidbody.simulated = false;
-            initialHeldPosition = new Vector3(0f, 0.3f, 0f);
+            initialHeldPosition = new Vector3(0f, 0.28f, 0f);
             isHolding = true;
         }
     }

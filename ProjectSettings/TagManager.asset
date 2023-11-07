@@ -10,6 +10,7 @@ TagManager:
   - BG
   - EasterEgg
   - Ceiling
+  - BasquetButton
   layers:
   - Default
   - TransparentFX

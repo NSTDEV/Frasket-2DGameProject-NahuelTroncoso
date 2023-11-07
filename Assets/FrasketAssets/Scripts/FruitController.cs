@@ -7,6 +7,8 @@ public class FruitController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool isGrabbed = false;
     private bool hasTouchedGround = false;
+    [SerializeField] private FruitData fruitData;
+
 
     void Awake()
     {
@@ -47,6 +49,12 @@ public class FruitController : MonoBehaviour
                 StartCoroutine(BlinkFruit());
             }
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collider)
+    {
+        GameManager.score += fruitData.fruitScore;
+        Destroy(gameObject);
     }
 
     private void DestroyFruit()

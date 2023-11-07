@@ -38,7 +38,7 @@ public class PauseMenuButton : MonoBehaviour
         pausedGame = false;
         ToggleBackgroundVisibility();
         Time.timeScale = 1f;
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(0);
     }
 
     public void ToggleBackgroundVisibility()

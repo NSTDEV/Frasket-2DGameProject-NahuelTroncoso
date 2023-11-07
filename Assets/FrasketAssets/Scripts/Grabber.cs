@@ -19,32 +19,31 @@ public class Grabber : MonoBehaviour
         MoveHeldFruit();
         if (isHolding)
         {
-            if (Input.GetMouseButtonDown(0))
-            {
-                dragController.StartDragging();
-            }
-            else if (Input.GetMouseButtonUp(0))
+            if (Input.GetMouseButtonUp(0))
             {
                 ThrowFruit();
                 isHolding = false;
             }
         }
+
+        if (heldFruit == null)
+        {
+            heldFruit = null;
+            isHolding = false;
+        }
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Fruit"))
+        if (collision.gameObject.CompareTag("Fruit") || collision.gameObject.CompareTag("PineaPowa"))
         {
-            if (!isHolding)
-            {
-                TryGrabFruit(collision.gameObject);
-            }
+            TryGrabFruit(collision.gameObject);
         }
     }
 
     private void TryGrabFruit(GameObject fruit)
     {
-        if (fruit.CompareTag("Fruit") && !isHolding)
+        if (!isHolding)
         {
             heldFruit = fruit;
             Rigidbody2D fruitRigidbody = heldFruit.GetComponent<Rigidbody2D>();
@@ -72,13 +71,9 @@ public class Grabber : MonoBehaviour
             fruitRigidbody.simulated = true;
 
             Vector3 throwDirection = -(dragController.dragEndPos - dragController.dragStartPos).normalized;
-
             float throwForce = dragController.throwForce * multipliyer;
 
             fruitRigidbody.velocity = throwDirection * throwForce;
-
-            heldFruit = null;
-            isHolding = false;
         }
     }
 }

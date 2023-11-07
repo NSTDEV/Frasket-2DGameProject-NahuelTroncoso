@@ -51,11 +51,6 @@ public class DragController : MonoBehaviour
         }
     }
 
-    public Vector3 GetDragStartPos()
-    {
-        return dragStartPos;
-    }
-
     void Drag()
     {
         Vector3 currentPos = MousePosition;
@@ -99,7 +94,6 @@ public class DragController : MonoBehaviour
         throwForce = distance.magnitude;
         dragEndPos = MousePosition;
 
-        // Lanzar el evento con la posición de dragEndPos
         OnDragEnd?.Invoke(dragEndPos);
     }
 }

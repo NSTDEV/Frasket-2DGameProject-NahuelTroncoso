@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f7483c105d78e0340a80976d9094c43c, type: 3}
+  m_Name: Box1
+  m_EditorClassIdentifier: 
+  boxName: SimpleBox
+  boxPrefab: {fileID: 3645231012238443867, guid: 620cb39cac0dbcd4cba52b69c05a7ff4, type: 3}
+  boxLifes: 1
+  availableFruits:
+  - fruitData: {fileID: 11400000, guid: 1b6cfbace31d5864f9b07d4630e73be6, type: 2}
+  - fruitData: {fileID: 11400000, guid: 8956d21d87b67f64b8da0ed5c95ad683, type: 2}

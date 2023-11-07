@@ -5,10 +5,7 @@ using UnityEngine;
 public class FruitController : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
-    private bool isGrabbed = false;
-    private bool hasTouchedGround = false;
-    [SerializeField] private FruitData fruitData;
-
+    public FruitData fruitData;
 
     void Awake()
     {
@@ -25,41 +22,13 @@ public class FruitController : MonoBehaviour
         StartCoroutine(BlinkFruit());
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Ground"))
-        {
-            hasTouchedGround = true;
-            if (isGrabbed)
-            {
-                hasTouchedGround = false;
-                spriteRenderer.enabled = true;
-                gameObject.transform.GetChild(0).gameObject.SetActive(false);
-                CancelInvoke("StartBlink");
-            }
-        }
-    }
-
-    private void OnCollisionExit2D(Collision2D collision)
-    {
-        if (collision.gameObject.CompareTag("Player"))
-        {
-            if (isGrabbed && hasTouchedGround)
-            {
-                StartCoroutine(BlinkFruit());
-            }
-        }
-    }
-
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        GameManager.score += fruitData.fruitScore;
-        Destroy(gameObject);
-    }
-
-    private void DestroyFruit()
-    {
-        Destroy(gameObject);
+        if (collider.gameObject.CompareTag("BasquetButton"))
+        {
+            GameManager.score += fruitData.fruitScore;
+            Destroy(gameObject);
+        }
     }
 
     private IEnumerator BlinkFruit()
@@ -78,6 +47,6 @@ public class FruitController : MonoBehaviour
         gameObject.transform.GetChild(0).gameObject.SetActive(true);
 
         yield return new WaitForSeconds(0.5f);
-        DestroyFruit();
+        Destroy(gameObject);
     }
 }

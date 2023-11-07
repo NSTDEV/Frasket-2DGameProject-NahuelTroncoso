@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: Banana
   m_EditorClassIdentifier: 
   fruitName: Banana
-  fruitSprite: {fileID: -5728686177044832811, guid: b1f24b3bc2e2f1d4b858657ad5c115a0, type: 3}
   fruitPrefab: {fileID: 9069896299393622601, guid: 1ebb931852a22124ca1d6931a9be5767, type: 3}
-  fruitScore: 25
+  fruitScore: 30

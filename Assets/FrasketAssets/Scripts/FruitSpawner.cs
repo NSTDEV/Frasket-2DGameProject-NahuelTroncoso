@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PrefabSpawner : MonoBehaviour
+public class FruitSpawner : MonoBehaviour
 {
     [SerializeField] FruitData[] fruitDataArray;
     [SerializeField] float spawnInterval = 0.5f;

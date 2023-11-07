@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: Orange
   m_EditorClassIdentifier: 
   fruitName: Orange
-  fruitSprite: {fileID: 4121880872312635667, guid: ffc9f271fad56c243a45f100b9dc6778, type: 3}
   fruitPrefab: {fileID: 3822207463468549113, guid: ca10ad6df0873374dabefb4945af15f2, type: 3}
-  fruitScore: 20
+  fruitScore: 25

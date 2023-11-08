@@ -49,6 +49,11 @@ public class BoxController : MonoBehaviour
         yield return new WaitForSeconds(duration);
         gameObject.transform.GetChild(0).gameObject.SetActive(false);
         spriteRenderer.enabled = true;
+
+        if (hitCount >= boxData.boxLifes)
+        {
+            StartCoroutine(DestroyBox());
+        }
     }
 
     IEnumerator DestroyBox()

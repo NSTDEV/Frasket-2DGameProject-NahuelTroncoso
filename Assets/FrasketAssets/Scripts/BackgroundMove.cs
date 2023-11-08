@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BackgroundMove : MonoBehaviour
 {
-    public RawImage img;
+    public RawImage rawIMG;
     public float _x;
     public float _y;
     public bool isPaused = false;
@@ -14,9 +14,9 @@ public class BackgroundMove : MonoBehaviour
     {
         if (isPaused)
         {
-            img.uvRect = new Rect(img.uvRect.position + new Vector2(_x, _y) * Time.unscaledDeltaTime, img.uvRect.size);
+            rawIMG.uvRect = new Rect(rawIMG.uvRect.position + new Vector2(_x, _y) * Time.unscaledDeltaTime, rawIMG.uvRect.size);
         }
 
-        img.uvRect = new Rect(img.uvRect.position + new Vector2(_x, _y) * Time.deltaTime, img.uvRect.size);
+        rawIMG.uvRect = new Rect(rawIMG.uvRect.position + new Vector2(_x, _y) * Time.deltaTime, rawIMG.uvRect.size);
     }
 }

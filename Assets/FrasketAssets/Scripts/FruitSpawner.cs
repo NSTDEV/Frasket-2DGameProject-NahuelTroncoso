@@ -24,7 +24,6 @@ public class FruitSpawner : MonoBehaviour
             FruitData selectedFruitData = fruitDataArray[Random.Range(0, fruitDataArray.Length)];
 
             GameObject fruitPrefab = selectedFruitData.fruitPrefab;
-
             GameObject spawnedFruit = Instantiate(fruitPrefab, position, Quaternion.identity);
 
             yield return new WaitForSeconds(spawnInterval);

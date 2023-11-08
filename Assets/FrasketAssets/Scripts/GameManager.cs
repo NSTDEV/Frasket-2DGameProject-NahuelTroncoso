@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     void Awake()
     {
+        backgroundController.rawIMG.enabled = false;
         backgroundController = FindObjectOfType<BackgroundMove>();
         if (backgroundController == null)
         {

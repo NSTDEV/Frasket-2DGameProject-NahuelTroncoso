@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class FruitSpawner : MonoBehaviour
 {
-    [SerializeField] FruitData[] fruitDataArray;
-    [SerializeField] float spawnInterval = 0.5f;
-    [SerializeField] float minTras;
-    [SerializeField] float maxTras;
+    public FruitData[] fruitDataArray;
+    public float spawnInterval = 0.5f;
+    public float minTras;
+    public float maxTras;
 
     void Start()
     {

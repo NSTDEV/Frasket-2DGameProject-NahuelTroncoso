@@ -1,12 +1,14 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class BoxController : MonoBehaviour
 {
     public BoxData boxData;
     private int remainingLifes;
     private SpriteRenderer spriteRenderer;
+    public AudioSource touchGround, hit, destroy;
     private int hitCount = 0;
 
     void Awake()
@@ -21,11 +23,17 @@ public class BoxController : MonoBehaviour
 
     void OnCollisionEnter2D(Collision2D collision)
     {
+        if (collision.gameObject.CompareTag("Ground"))
+        {
+            touchGround.Play();
+        }
+
         if (collision.gameObject.CompareTag("PineaPowa"))
         {
             if (remainingLifes > 0)
             {
                 hitCount++;
+                hit.Play();
                 remainingLifes--;
 
                 Animator childAnimator = gameObject.transform.GetChild(0).GetComponent<Animator>();
@@ -67,7 +75,7 @@ public class BoxController : MonoBehaviour
             spriteRenderer.enabled = false;
             yield return new WaitForSeconds(timeToDestroy);
         }
-
+        destroy.Play();
         yield return new WaitForSeconds(timeToDestroy);
 
         OpenBox();

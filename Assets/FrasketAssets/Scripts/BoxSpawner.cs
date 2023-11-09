@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class BoxSpawner : MonoBehaviour
 {
-    [SerializeField] BoxData[] boxArray;
-    [SerializeField] float spawnInterval = 0.5f;
-    [SerializeField] float minTras;
-    [SerializeField] float maxTras;
+    public BoxData[] boxArray;
+    public float spawnInterval = 0.5f;
+    public float minTras;
+    public float maxTras;
 
     void Start()
     {

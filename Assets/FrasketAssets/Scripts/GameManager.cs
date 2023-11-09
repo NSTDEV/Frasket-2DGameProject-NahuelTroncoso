@@ -5,136 +5,93 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+    public static GameManager Instance;
     public static int score = 0;
     public TextMeshProUGUI scoreText;
-    public bool canGoToNextLevel;
-    public int levelIndex;
+    public TextMeshProUGUI timeText;
+    public Slider slider;
+    private float sliderVolume;
+    private float timer = 10f;
 
-    [SerializeField] private GameObject pauseButton;
-    [SerializeField] private GameObject menuOptions;
-    [SerializeField] private GameObject easterEgg;
-    [SerializeField] private BackgroundMove backgroundController;
-    private bool backgroundVisible = false;
-    private bool pausedGame = false;
-
-    public static void ResetScore()
+    private void Awake()
     {
-        score = 0;
-    }
-
-    void Awake()
-    {
-        backgroundController.rawIMG.enabled = false;
-        backgroundController = FindObjectOfType<BackgroundMove>();
-        if (backgroundController == null)
+        if (GameManager.Instance == null)
         {
-            Debug.LogError("Background controller not found.");
-        }
-
-        if (FindObjectsOfType(GetType()).Length > 1)
-        {
-            Destroy(gameObject);
+            GameManager.Instance = this;
+            DontDestroyOnLoad(this.gameObject);
         }
         else
         {
-            DontDestroyOnLoad(gameObject);
+            Destroy(gameObject);
         }
+    }
+
+    void Start()
+    {
+        if (scoreText == null)
+        {
+            scoreText = GetComponentInChildren<TextMeshProUGUI>();
+            Debug.LogWarning("Score Text is not assigned.");
+        }
+        if (timeText == null)
+        {
+            timeText = GetComponentInChildren<TextMeshProUGUI>();
+            Debug.LogWarning("Time Text is not assigned.");
+        }
+        if (slider == null)
+        {
+            slider = GetComponentInChildren<Slider>();
+            Debug.LogWarning("Slider is not assigned.");
+        }
+
+        slider.value = PlayerPrefs.GetFloat("volumenAudio", 1f);
+        AudioListener.volume = slider.value;
     }
 
     void Update()
     {
-        scoreText.text = GameManager.score.ToString();
+        timer -= Time.deltaTime;
 
-        if (canGoToNextLevel)
+        if (scoreText != null)
         {
-            ChangeLevel(levelIndex);
+            scoreText.text = GameManager.score.ToString();
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (timer <= 0)
         {
-            UpdateGameState();
+            timer = 0;
+        }
+        if (timeText != null)
+        {
+            timeText.text = timer.ToString("f0");
         }
 
-        if (backgroundController != null)
-        {
-            NextLevel();
-        }
+        NextLevel();
     }
 
-    public void ChangeLevel(int index)
+    public void ChangeSlider(float value)
     {
-        SceneManager.LoadScene(index);
-    }
-
-    public void optionsSetter(bool option1, bool option2)
-    {
-        pauseButton.SetActive(option1);
-        menuOptions.SetActive(option2);
-        easterEgg.SetActive(option2);
-    }
-
-    public void StartMenu()
-    {
-        pausedGame = false;
-        ToggleBackgroundVisibility();
-        Time.timeScale = 1f;
-        SceneManager.LoadScene(0);
-    }
-
-    public void StartGame()
-    {
-        SceneManager.LoadScene(1);
-    }
-
-    public void SoundUI()
-    {
-        SceneManager.LoadScene(1);
-        ToggleBackgroundVisibility();
-    }
-
-    public void ToggleBackgroundVisibility()
-    {
-        backgroundVisible = !backgroundVisible;
-        backgroundController.rawIMG.enabled = backgroundVisible;
-    }
-
-    public void UpdateGameState()
-    {
-        pausedGame = !pausedGame;
-        ToggleBackgroundVisibility();
-
-        if (pausedGame)
-        {
-            Time.timeScale = 0f;
-            optionsSetter(false, true);
-        }
-        else
-        {
-            Time.timeScale = 1f;
-            optionsSetter(true, false);
-        }
-    }
-
-    public bool isPaused()
-    {
-        return pausedGame;
-    }
-
-    public void Close()
-    {
-        Debug.Log("Closing game...");
-        Application.Quit();
+        sliderVolume = value;
+        PlayerPrefs.SetFloat("volumenAudio", sliderVolume);
+        AudioListener.volume = slider.value;
     }
 
     public void NextLevel()
     {
-        if (levelIndex == 1 && score >= 300)
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        if (currentSceneName == "MainMenu")
         {
-            ChangeLevel(2);
+            score = 0;
         }
-        else if (levelIndex == 2 && score >= 550)
+        if (currentSceneName == "Level1" && timer <= 0 && score >= 300)
         {
-            ChangeLevel(3);
+            timer = 40f;
+            SceneManager.LoadScene("Level2");
+        }
+        if (currentSceneName == "Level2" && timer <= 0 && score >= 500)
+        {
+            timer = 60f;
+            SceneManager.LoadScene("GameOver");
         }
     }
 }

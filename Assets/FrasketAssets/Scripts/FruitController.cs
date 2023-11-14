@@ -7,11 +7,15 @@ public class FruitController : MonoBehaviour
 {
     private SpriteRenderer spriteRenderer;
     public FruitData fruitData;
-    public AudioSource touchGround, gol, destroy;
+    public AudioSource touchGround, destroy;
+    private bool hasBeenProcessed = false;
+
+    private BackgroundMove bgm;
 
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        bgm = FindObjectOfType<BackgroundMove>();
     }
 
     private void Start()
@@ -34,19 +38,19 @@ public class FruitController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (collider.gameObject.CompareTag("BasquetButton"))
+        if (collider.gameObject.CompareTag("BasquetButton") && !hasBeenProcessed)
         {
             GameManager.score += fruitData.fruitScore;
+            bgm.CamShakes();
             StartCoroutine(GolAndDestroy());
         }
     }
 
     private IEnumerator GolAndDestroy()
     {
-        StopCoroutine(BlinkFruit());
-        gol.Play();
+        hasBeenProcessed = true;
 
-        yield return new WaitForSeconds(0.65f);
+        yield return new WaitForSeconds(0.5f);
         Destroy(gameObject);
     }
 

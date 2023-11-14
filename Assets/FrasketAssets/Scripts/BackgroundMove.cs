@@ -9,10 +9,13 @@ public class BackgroundMove : MonoBehaviour
     public float _x;
     public float _y;
     public bool isPaused = false;
+    public AudioSource gol;
+
+    public Animator camAnimator;
 
     void Awake()
     {
-        rawIMGBG.enabled = true;
+        rawIMGBG.gameObject.SetActive(true);
         if (rawIMGBG == null)
         {
             Debug.LogError("Background not found.");
@@ -21,10 +24,14 @@ public class BackgroundMove : MonoBehaviour
 
     void Update()
     {
-        if (isPaused)
-        {
-            rawIMGBG.uvRect = new Rect(rawIMGBG.uvRect.position + new Vector2(_x, _y) * Time.unscaledDeltaTime, rawIMGBG.uvRect.size);
-        }
-        rawIMGBG.uvRect = new Rect(rawIMGBG.uvRect.position + new Vector2(_x, _y) * Time.deltaTime, rawIMGBG.uvRect.size);
+        float deltaTime = isPaused ? Time.unscaledDeltaTime : Time.deltaTime;
+        rawIMGBG.uvRect = new Rect(rawIMGBG.uvRect.position + new Vector2(_x, _y) * deltaTime, rawIMGBG.uvRect.size);
+
+    }
+
+    public void CamShakes()
+    {
+        gol.Play();
+        camAnimator.SetTrigger("Shake");
     }
 }

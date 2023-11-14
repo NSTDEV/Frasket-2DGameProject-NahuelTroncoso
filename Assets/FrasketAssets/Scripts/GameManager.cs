@@ -1,7 +1,6 @@
 using UnityEngine;
 using TMPro;
 using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -9,22 +8,7 @@ public class GameManager : MonoBehaviour
     public static int score = 0;
     public TextMeshProUGUI scoreText;
     public TextMeshProUGUI timeText;
-    public Slider slider;
-    private float sliderVolume;
     private float timer = 10f;
-
-    private void Awake()
-    {
-        if (GameManager.Instance == null)
-        {
-            GameManager.Instance = this;
-            DontDestroyOnLoad(this.gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     void Start()
     {
@@ -38,14 +22,6 @@ public class GameManager : MonoBehaviour
             timeText = GetComponentInChildren<TextMeshProUGUI>();
             Debug.LogWarning("Time Text is not assigned.");
         }
-        if (slider == null)
-        {
-            slider = GetComponentInChildren<Slider>();
-            Debug.LogWarning("Slider is not assigned.");
-        }
-
-        slider.value = PlayerPrefs.GetFloat("volumenAudio", 1f);
-        AudioListener.volume = slider.value;
     }
 
     void Update()
@@ -69,20 +45,9 @@ public class GameManager : MonoBehaviour
         NextLevel();
     }
 
-    public void ChangeSlider(float value)
-    {
-        sliderVolume = value;
-        PlayerPrefs.SetFloat("volumenAudio", sliderVolume);
-        AudioListener.volume = slider.value;
-    }
-
     public void NextLevel()
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
-        if (currentSceneName == "MainMenu")
-        {
-            score = 0;
-        }
         if (currentSceneName == "Level1" && timer <= 0 && score >= 300)
         {
             timer = 40f;

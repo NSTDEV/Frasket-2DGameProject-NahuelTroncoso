@@ -1,11 +1,13 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 using UnityEngine.Audio;
 
 public class OneMultiButton : MonoBehaviour
 {
     public GameObject pauseButton;
     public GameObject menuOptions;
+    public GameObject slider;
     public GameObject easterEgg;
     private bool pausedGame = false;
     public AudioSource touch, menu;
@@ -61,6 +63,7 @@ public class OneMultiButton : MonoBehaviour
         pauseButton.SetActive(option1);
         menuOptions.SetActive(option2);
         easterEgg.SetActive(option2);
+        slider.SetActive(option2);
     }
 
     public void ExitGame()
@@ -73,8 +76,10 @@ public class OneMultiButton : MonoBehaviour
 
     public void GoToMenu()
     {
+        if (pausedGame) PauseResumeGame();
         menu.Play();
         SceneManager.LoadScene("MainMenu");
+        GameManager.score = 0;
     }
 
     public void StartGame()

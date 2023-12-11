@@ -2,42 +2,50 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using UnityEngine.Audio;
+using System.Collections;
 
-public class OneMultiButton : MonoBehaviour
+public class MultiButtonController : MonoBehaviour
 {
     public GameObject pauseButton;
     public GameObject menuOptions;
-    public GameObject slider;
     public GameObject easterEgg;
-    private bool pausedGame = false;
     public AudioSource touch, menu;
+    public GameObject transition;
+    private Animator transitionAnimator;
+    public Slider slider;
+    private float sliderVolume;
+
+    private bool pausedGame = false;
+    private bool retryStarted = false;
+    private bool tutorialOn = false;
 
     private void Start()
     {
-        if (pauseButton == null)
+        if (pauseButton == null || menuOptions == null || easterEgg == null || slider == null)
         {
-            pauseButton = GameObject.Find("PauseButton");
-            Debug.LogWarning("Pause Button is not found.");
+            Debug.LogError("One or more game objects are not assigned.");
+        }
+        if (slider != null)
+        {
+            slider.value = PlayerPrefs.GetFloat("volumenAudio", 1f);
+            AudioListener.volume = slider.value;
         }
 
-        if (menuOptions == null)
-        {
-            menuOptions = GameObject.Find("MenuOptions");
-            Debug.LogWarning("Menu Options is not found.");
-        }
-
-        if (easterEgg == null)
-        {
-            easterEgg = GameObject.Find("EasterEgg");
-            Debug.LogWarning("Easter Egg is not found.");
-        }
+        transitionAnimator = transition.GetComponent<Animator>();
+        transition.SetActive(false);
     }
 
-    public void Update()
+    private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) && !tutorialOn)
         {
             PauseResumeGame();
+        }
+
+        if (GameManager.gameTimer <= 0 && GameManager.score < GameManager.scoreToCatch && !retryStarted)
+        {
+            retryStarted = true;
+            StartCoroutine(StartRetry());
         }
     }
 
@@ -46,7 +54,13 @@ public class OneMultiButton : MonoBehaviour
         pausedGame = !pausedGame;
         touch.Play();
 
-        if (pausedGame)
+        if (tutorialOn)
+        {
+            transitionAnimator.SetBool("Enter", false);
+            Time.timeScale = 1f;
+            tutorialOn = false;
+        }
+        else if (pausedGame)
         {
             Time.timeScale = 0f;
             optionsSetter(false, true);
@@ -58,12 +72,12 @@ public class OneMultiButton : MonoBehaviour
         }
     }
 
-    public void optionsSetter(bool option1, bool option2)
+    private void optionsSetter(bool option1, bool option2)
     {
         pauseButton.SetActive(option1);
         menuOptions.SetActive(option2);
         easterEgg.SetActive(option2);
-        slider.SetActive(option2);
+        easterEgg.transform.GetChild(0).gameObject.SetActive(false);
     }
 
     public void ExitGame()
@@ -78,19 +92,60 @@ public class OneMultiButton : MonoBehaviour
     {
         if (pausedGame) PauseResumeGame();
         menu.Play();
-        SceneManager.LoadScene("MainMenu");
-        GameManager.score = 0;
+
+        StartCoroutine(ChangeScene("MainMenu"));
+    }
+
+    public void StartTutorial()
+    {
+        touch.Play();
+        transition.SetActive(true);
+        Time.timeScale = 0f;
+        tutorialOn = true;
+        transitionAnimator.SetBool("Enter", true);
+    }
+
+    IEnumerator StartRetry()
+    {
+        yield return new WaitForSeconds(1.5f);
+        StartTutorial();
     }
 
     public void StartGame()
     {
         touch.Play();
-        SceneManager.LoadScene("Level1");
+        transitionAnimator.SetBool("Enter", false);
+        Time.timeScale = 1f;
+
+        StartCoroutine(ChangeScene("Level1"));
+    }
+
+    IEnumerator ChangeScene(string sceneName)
+    {
+        yield return new WaitForSeconds(1f);
+
+        SceneManager.LoadScene(sceneName);
+        GameManager.score = 0;
     }
 
     public void ActivateEasterEgg()
     {
         touch.Play();
-        // Implementa aquí la lógica para activar tu "Easter Egg"
+        StartCoroutine(ActivateAndDeactivateEasterEgg());
+    }
+
+    private IEnumerator ActivateAndDeactivateEasterEgg()
+    {
+        easterEgg.transform.GetChild(0).gameObject.SetActive(true);
+
+        yield return new WaitForSecondsRealtime(1.5f);
+        easterEgg.transform.GetChild(0).gameObject.SetActive(false);
+    }
+
+    public void ChangeSlider(float value)
+    {
+        sliderVolume = value;
+        PlayerPrefs.SetFloat("volumenAudio", sliderVolume);
+        AudioListener.volume = slider.value;
     }
 }

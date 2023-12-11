@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 using TMPro;
 using UnityEngine.SceneManagement;
 
@@ -6,57 +7,87 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public static int score = 0;
+    public static int scoreToCatch = 0;
     public TextMeshProUGUI scoreText;
+    public TextMeshProUGUI scoreToCatchText;
     public TextMeshProUGUI timeText;
-    private float timer = 10f;
+    public static float gameTimer = 0f;
+
+    public Animator transitionAnimator;
 
     void Start()
     {
-        if (scoreText == null)
+        gameTimer = 40f;
+
+        if (SceneManager.GetActiveScene().name == "Level2")
         {
-            scoreText = GetComponentInChildren<TextMeshProUGUI>();
-            Debug.LogWarning("Score Text is not assigned.");
+            transitionAnimator.SetBool("EnterNextRoom", false);
+            gameTimer = 60f;
         }
-        if (timeText == null)
+
+        if (scoreText == null || timeText == null)
         {
-            timeText = GetComponentInChildren<TextMeshProUGUI>();
-            Debug.LogWarning("Time Text is not assigned.");
+            Debug.LogWarning("Score or Time Text not assigned.");
         }
     }
 
     void Update()
     {
-        timer -= Time.deltaTime;
+        gameTimer -= Time.deltaTime;
+        gameTimer = Mathf.Max(0, gameTimer);
+
 
         if (scoreText != null)
         {
             scoreText.text = GameManager.score.ToString();
+            scoreToCatchText.text = GameManager.scoreToCatch.ToString();
         }
 
-        if (timer <= 0)
+        if (gameTimer <= 0)
         {
-            timer = 0;
+            transitionAnimator.SetBool("EnterNextRoom", true);
         }
+
         if (timeText != null)
         {
-            timeText.text = timer.ToString("f0");
+            timeText.text = gameTimer.ToString("f0");
         }
 
-        NextLevel();
+        SceneTransition();
     }
 
-    public void NextLevel()
+    private void SceneTransition()
     {
         string currentSceneName = SceneManager.GetActiveScene().name;
-        if (currentSceneName == "Level1" && timer <= 0 && score >= 300)
+
+        if (currentSceneName == "Level1")
         {
-            timer = 40f;
-            SceneManager.LoadScene("Level2");
+            scoreToCatch = 300;
+
+            if (gameTimer <= 0 && score >= scoreToCatch)
+            {
+                StartCoroutine(ChangeScene("Level2"));
+            }
         }
-        if (currentSceneName == "Level2" && timer <= 0 && score >= 500)
+        else if (currentSceneName == "Level2")
         {
-            timer = 60f;
-            SceneManager.LoadScene("GameOver");
+            scoreToCatch = 550;
+
+            if (gameTimer <= 0 && score >= scoreToCatch)
+            {
+                StartCoroutine(ChangeScene("GameOver"));
+            }
         }
+    }
+
+    IEnumerator ChangeScene(string sceneName)
+    {
+        float waitTime = 1.2f;
+        yield return new WaitForSeconds(waitTime);
+
+        float transitionDuration = 1.2f;
+        yield return new WaitForSecondsRealtime(transitionDuration);
+
+        SceneManager.LoadScene(sceneName);
     }
 }

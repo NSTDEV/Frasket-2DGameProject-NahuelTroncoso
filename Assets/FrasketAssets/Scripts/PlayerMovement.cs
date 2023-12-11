@@ -22,6 +22,11 @@ public class PlayerMovement : MonoBehaviour
     public SpriteRenderer spriteRenderer;
     public Animator animator;
 
+    void Start()
+    {
+        rb2D = GetComponent<Rigidbody2D>();
+    }
+
     private void OnCollisionEnter2D(Collision2D other)
     {
         if (other.gameObject.CompareTag("Fruit") || other.gameObject.CompareTag("Ground"))
@@ -36,12 +41,6 @@ public class PlayerMovement : MonoBehaviour
         {
             isGrounded = false;
         }
-    }
-
-    void Start()
-    {
-        rb2D = GetComponent<Rigidbody2D>();
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("Player"), LayerMask.NameToLayer("Fruits"));
     }
 
     private void HorizontalMoveSound()
@@ -63,23 +62,24 @@ public class PlayerMovement : MonoBehaviour
 
     private void HorizontalMove()
     {
-        if (Input.GetKey("d") || Input.GetKey("right"))
+        float horizontalInput = Input.GetAxis("Horizontal");
+
+        rb2D.velocity = new Vector2(horizontalInput * runSpeed, rb2D.velocity.y);
+
+        if (horizontalInput > 0)
         {
-            rb2D.velocity = new Vector2(runSpeed, rb2D.velocity.y);
             spriteRenderer.flipX = false;
             animator.SetBool("Run", true);
             HorizontalMoveSound();
         }
-        else if (Input.GetKey("a") || Input.GetKey("left"))
+        else if (horizontalInput < 0)
         {
-            rb2D.velocity = new Vector2(-runSpeed, rb2D.velocity.y);
             spriteRenderer.flipX = true;
             animator.SetBool("Run", true);
             HorizontalMoveSound();
         }
         else
         {
-            rb2D.velocity = new Vector2(0, rb2D.velocity.y);
             animator.SetBool("Run", false);
             isWalking = false;
         }
@@ -87,16 +87,18 @@ public class PlayerMovement : MonoBehaviour
 
     private void PlayerJump()
     {
-        if (isGrounded && Input.GetKeyDown("space"))
+        if (isGrounded && Input.GetButtonDown("Jump"))
         {
             rb2D.velocity = new Vector2(rb2D.velocity.x, jumpSpeed);
             isGrounded = false;
+            isWalking = false;
+
             animator.SetBool("Jump", true);
             animator.SetBool("Run", false);
             animator.SetBool("Idle", false);
+
             jump.Play();
             walk.Stop();
-            isWalking = false;
         }
 
         if (rb2D.velocity.y < 0)
@@ -105,7 +107,7 @@ public class PlayerMovement : MonoBehaviour
             animator.SetBool("Jump", false);
         }
 
-        if (rb2D.velocity.y > 0 && !Input.GetKey("space"))
+        if (rb2D.velocity.y > 0 && !Input.GetButton("Jump"))
         {
             rb2D.velocity += Vector2.up * Physics2D.gravity.y * (lowJumpMultiplier) * Time.deltaTime;
         }

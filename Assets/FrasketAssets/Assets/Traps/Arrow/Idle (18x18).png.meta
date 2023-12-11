@@ -158,10 +158,10 @@ TextureImporter:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 18
-        height: 18
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -177,12 +177,12 @@ TextureImporter:
       name: Idle (18x18)_1
       rect:
         serializedVersion: 2
-        x: 18
+        x: 64
         y: 0
-        width: 18
-        height: 18
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -198,12 +198,12 @@ TextureImporter:
       name: Idle (18x18)_2
       rect:
         serializedVersion: 2
-        x: 36
+        x: 128
         y: 0
-        width: 18
-        height: 18
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -219,12 +219,12 @@ TextureImporter:
       name: Idle (18x18)_3
       rect:
         serializedVersion: 2
-        x: 54
+        x: 256
         y: 0
-        width: 18
-        height: 18
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -240,12 +240,12 @@ TextureImporter:
       name: Idle (18x18)_4
       rect:
         serializedVersion: 2
-        x: 72
+        x: 320
         y: 0
-        width: 18
-        height: 18
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -258,15 +258,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle (18x18)_5
+      name: Idle (18x18)_6
       rect:
         serializedVersion: 2
-        x: 90
+        x: 384
         y: 0
-        width: 18
-        height: 18
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -279,36 +279,15 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: Idle (18x18)_6
-      rect:
-        serializedVersion: 2
-        x: 108
-        y: 0
-        width: 18
-        height: 18
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: ab9bc16c391417241a11c54aece5f205
-      internalID: -5692657092941465571
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
       name: Idle (18x18)_7
       rect:
         serializedVersion: 2
-        x: 126
+        x: 448
         y: 0
-        width: 18
-        height: 18
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -324,19 +303,19 @@ TextureImporter:
       name: Idle (18x18)_8
       rect:
         serializedVersion: 2
-        x: 144
+        x: 512
         y: 0
-        width: 18
-        height: 18
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 86c7c9d3f9844784592983ea6826dbf3
-      internalID: -1451601718105120401
+      spriteID: da7307c967be0044e9c617f7111aba1e
+      internalID: 1644897918997917620
       vertices: []
       indices: 
       edges: []
@@ -345,19 +324,40 @@ TextureImporter:
       name: Idle (18x18)_9
       rect:
         serializedVersion: 2
-        x: 162
+        x: 576
         y: 0
-        width: 18
-        height: 18
+        width: 64
+        height: 64
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da7307c967be0044e9c617f7111aba1e
-      internalID: 1644897918997917620
+      spriteID: f15120aa7d5d8844aac55f668c660b25
+      internalID: 1204802062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: Idle (18x18)_11
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 0
+        width: 64
+        height: 64
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df000ceeefe7f77428f1a9299341067a
+      internalID: 1996315292
       vertices: []
       indices: 
       edges: []
@@ -375,14 +375,14 @@ TextureImporter:
     nameFileIdTable:
       Idle (18x18)_0: -3246028407001408874
       Idle (18x18)_1: 1879266752249246583
+      Idle (18x18)_11: -489910517
       Idle (18x18)_2: -598956113216523009
       Idle (18x18)_3: -9211657020794476399
       Idle (18x18)_4: 756180008433707025
-      Idle (18x18)_5: 7742524084409060902
-      Idle (18x18)_6: -5692657092941465571
+      Idle (18x18)_6: 7742524084409060902
       Idle (18x18)_7: -5997451296551234478
-      Idle (18x18)_8: -1451601718105120401
-      Idle (18x18)_9: 1644897918997917620
+      Idle (18x18)_8: 1644897918997917620
+      Idle (18x18)_9: 51129689
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

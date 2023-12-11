@@ -23,6 +23,14 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+    // void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.Escape))
+    //     {
+    //         slider.enable = true;
+    //     }
+    // }
+
     void Start()
     {
         if (slider == null)
